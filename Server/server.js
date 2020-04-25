@@ -11,7 +11,7 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
   
   const db = client.db(dbName);
 
-  db.collection(colName, {w:1}, function(err, collection){
+  db.collection(colName, function(err, collection){
         collection.insertOne(
             { item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } }
             );
