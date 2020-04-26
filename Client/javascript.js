@@ -26,53 +26,69 @@ function pullFromDB(){
             if(data[i].inCart){
                 document.getElementById(data[i].text).style.backgroundColor = 'rgb(159, 219, 186)';
                 document.getElementById(data[i].text).style.textDecoration = 'line-through';
-                validateItemsInCart();
+                
             }
             
         }
+        validateItemsInCart();
     });
 }
 
-function clearItems(){
-    for(i = 0; i < items.length; i++){
-        if(items[i].inCart === true){
-            document.getElementById(items[i].text).remove();
-            items.splice(i--,1);        
+async function clearItems(){
+
+    //document.getElementById(items[i].text).remove();
+    const allItems = await fetch('http://localhost:5000/all-items')
+    .catch((error) => {
+        console.error('Error:', error);
+        });
+
+    let data = await allItems.json();
+    console.log(data);
+    for(i in data){
+        if (data[i].inCart === true){
+            document.getElementById(data[i].text).remove();
         }
     }
-    validateItemsInCart();
+    
+    
+    const removedItems = await fetch('http://localhost:5000/remove-incart-items', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+
+    let response = await removedItems;
+    console.log(response);
+    validateItemsInCart(); 
 }
 
-function crossOutItem (event) {
-    event.preventDefault();
 
-    //find index to modify
-    const indexInCart = findIndexOfItem(event.target.value);
-
-    //toggle index
-    if(items[indexInCart].inCart){
-        //***Call to Database to update inCart value***
-        items[indexInCart].inCart = false;
-        event.target.parentElement.style.backgroundColor = 'white';
-        event.target.parentElement.style.textDecoration = 'none';
-    }else{
-        //***Call to Database to update inCart value***
-        items[indexInCart].inCart = true;
-        event.target.parentElement.style.backgroundColor = 'rgb(159, 219, 186)';
-        event.target.parentElement.style.textDecoration = 'line-through';
-    }
-
-    validateItemsInCart();
-
-}
 
 function removeItem(event) {
     event.preventDefault();
 
-    const indexToBeRemoved = findIndexOfItem(event.target.value);
+    let item = {
+        text: event.target.value
+    }
 
-    //remove item in array with splice
-    items.splice(indexToBeRemoved, 1);
+    fetch('http://localhost:5000/remove-item', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+        console.log('Success:', data);
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
     event.target.parentElement.remove();
 
     validateItemsInCart();
@@ -84,7 +100,21 @@ function newItem (event) {
         text: itemValue.value,
         inCart: false
     };
-    items.push(item);
+    fetch('http://localhost:5000/add-item', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+        console.log('Success:', data);
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+    //items.push(item);
     addItem(item);
     console.log(items);
 }
@@ -119,7 +149,7 @@ function addItem (item) {
     //clear input data
     itemValue.value = "";
     deleteButton.addEventListener("click", removeItem);
-    inCartButton.addEventListener("click", crossOutItem);
+    inCartButton.addEventListener("click", toggleCart);
     
 }
 
@@ -128,9 +158,56 @@ function validateItemsInCart(){
     /* for(i in items){
         if(items[i].inCart === true){checkVisiblity++;}
     } */
-    
+    fetch('http://localhost:5000/validate-cart')
+    .then((response) => {
+        return response.json();
+     })
+     .then((data) => {
+        console.log(data);
+        clearItemBtn.style.visibility = data.length === 0 ? 'hidden' : 'visible';
+    });
 
-    clearItemBtn.style.visibility = checkVisiblity === 0 ? 'hidden' : 'visible';
+   
+}
+
+async function checkInCart(value){
+
+    let rspnse = await fetch(`http://localhost:5000/${value}`);
+    let data = await rspnse.json();
+    return data;
+    
+}
+
+async function toggleCart(event){
+    event.preventDefault();
+    let list = await checkInCart(event.target.value);
+    let data = list[0];
+    //const data = { text: value, inCart: false };
+    console.log(data.inCart);
+    data.inCart = data.inCart ? false : true;
+    if(data.inCart){
+        event.target.parentElement.style.backgroundColor = 'rgb(159, 219, 186)';
+        event.target.parentElement.style.textDecoration = 'line-through';
+    } else{
+        event.target.parentElement.style.backgroundColor = 'white';
+        event.target.parentElement.style.textDecoration = 'none';
+    }
+    fetch('http://localhost:5000/toggle-cart', {
+    method: 'POST', // or 'PUT'
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+    console.log('Success:', data);
+    })
+    .catch((error) => {
+    console.error('Error:', error);
+    });
+    
+    validateItemsInCart();
 }
 
 function findIndexOfItem(value){
