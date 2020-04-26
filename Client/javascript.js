@@ -7,10 +7,31 @@ const todoButton = document.querySelector(".itemButton");
 const itemValue = document.querySelector(".itemData");
 const clearItemBtn = document.querySelector(".clearInCartItems");
 //Event
-todoButton.addEventListener("click", addItem);
+todoButton.addEventListener("click", newItem);
 clearItemBtn.addEventListener("click", clearItems);
 
 //Functions
+window.onload = pullFromDB;
+
+function pullFromDB(){
+    fetch('http://localhost:5000/all-items')
+    .then((response) => {
+        return response.json();
+     })
+     .then((data) => {
+        console.log(data);
+        items = data;
+        for(i in data){
+            addItem(data[i]);
+            if(data[i].inCart){
+                document.getElementById(data[i].text).style.backgroundColor = 'rgb(159, 219, 186)';
+                document.getElementById(data[i].text).style.textDecoration = 'line-through';
+                validateItemsInCart();
+            }
+            
+        }
+    });
+}
 
 function clearItems(){
     for(i = 0; i < items.length; i++){
@@ -57,19 +78,19 @@ function removeItem(event) {
     validateItemsInCart();
 }
 
-
-
-
-function addItem (event) {
+function newItem (event) {
     event.preventDefault();
-
-    //add object to array of objects
     let item={
-        id: Math.floor(Math.random() * 1000000000),
         text: itemValue.value,
         inCart: false
     };
     items.push(item);
+    addItem(item);
+    console.log(items);
+}
+
+
+function addItem (item) {
 
     //create div with classname. This div will wrap other elemnts below
     let itemDiv = document.createElement("DIV");
@@ -104,9 +125,11 @@ function addItem (event) {
 
 function validateItemsInCart(){
     let checkVisiblity = 0;
-    for(i in items){
+    /* for(i in items){
         if(items[i].inCart === true){checkVisiblity++;}
-    }
+    } */
+    
+
     clearItemBtn.style.visibility = checkVisiblity === 0 ? 'hidden' : 'visible';
 }
 

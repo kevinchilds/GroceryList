@@ -25,14 +25,23 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
   /* db.collection(colName, function(err, collection){
         collection.find().pretty();
   }); */
- app.get('/list', (req, res) => {
+ app.get('/all-items', (req, res) => {
      let data = db.collection('groceryList').find().toArray()
      .then(results => {
          console.log(results)
          res.json(results);
      })
-     .catch(error => console.error(error))
-     
+     .catch(error => console.error(error))    
  })
+
+ app.get('/validate-cart', (req, res) => {
+    let data = db.collection('groceryList').find({ inCart: true}).toArray()
+    .then(results => {
+        console.log(results)
+        res.json(results);
+    })
+    .catch(error => console.error(error))    
+})
+
 
 });
