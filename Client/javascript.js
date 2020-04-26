@@ -1,48 +1,35 @@
-//global
-let items = [];
-
-
 //Selectors
 const todoButton = document.querySelector(".itemButton");
 const itemValue = document.querySelector(".itemData");
 const clearItemBtn = document.querySelector(".clearInCartItems");
+
 //Event
 todoButton.addEventListener("click", newItem);
 clearItemBtn.addEventListener("click", clearItems);
 
-//Functions
+//ON LOAD FUNCTION CALL
 window.onload = pullFromDB;
 
-function pullFromDB(){
-    fetch('http://localhost:5000/all-items')
-    .then((response) => {
-        return response.json();
-     })
-     .then((data) => {
-        console.log(data);
-        items = data;
-        for(i in data){
-            addItem(data[i]);
-            if(data[i].inCart){
-                document.getElementById(data[i].text).style.backgroundColor = 'rgb(159, 219, 186)';
-                document.getElementById(data[i].text).style.textDecoration = 'line-through';
-                
-            }
-            
-        }
-        validateItemsInCart();
-    });
+//initial pull from DB
+async function pullFromDB(){
+    const response = await fetch('http://localhost:5000/all-items');
+    const data = await response.json();
+//create html items
+    for(i in data){
+        addItem(data[i]);
+        inCartDecoration(data[i]);   
+    }
+    validateItemsInCart(); 
 }
 
 async function clearItems(){
-
-    //document.getElementById(items[i].text).remove();
+//get all data in collection
     const allItems = await fetch('http://localhost:5000/all-items')
     .catch((error) => {
         console.error('Error:', error);
         });
-
     let data = await allItems.json();
+//remove items that are in cart front end
     console.log(data);
     for(i in data){
         if (data[i].inCart === true){
@@ -50,7 +37,7 @@ async function clearItems(){
         }
     }
     
-    
+ //api call to remove items in cart in backend   
     const removedItems = await fetch('http://localhost:5000/remove-incart-items', {
         method: 'POST', // or 'PUT'
         headers: {
@@ -67,59 +54,51 @@ async function clearItems(){
 }
 
 
-
-function removeItem(event) {
+//remove item from button event
+async function removeItem(event) {
     event.preventDefault();
 
-    let item = {
+    const item = {
         text: event.target.value
     }
 
-    fetch('http://localhost:5000/remove-item', {
+    const response = await fetch('http://localhost:5000/remove-item', {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(item),
         })
-        .then((response) => response.json())
-        .then((data) => {
-        console.log('Success:', data);
-        })
         .catch((error) => {
         console.error('Error:', error);
         });
-    event.target.parentElement.remove();
 
+    event.target.parentElement.remove();
     validateItemsInCart();
 }
 
-function newItem (event) {
+//add new item to database
+async function newItem (event) {
     event.preventDefault();
-    let item={
+    const item={
         text: itemValue.value,
         inCart: false
     };
-    fetch('http://localhost:5000/add-item', {
+    const response = await fetch('http://localhost:5000/add-item', {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(item),
         })
-        .then((response) => response.json())
-        .then((data) => {
-        console.log('Success:', data);
-        })
         .catch((error) => {
-        console.error('Error:', error);
+            console.error('Error:', error);
         });
-    //items.push(item);
-    addItem(item);
-    console.log(items);
+    const data = await response.json();
+    addItem(item);    
 }
 
-
+//create html item
 function addItem (item) {
 
     //create div with classname. This div will wrap other elemnts below
@@ -153,45 +132,38 @@ function addItem (item) {
     
 }
 
-function validateItemsInCart(){
+//toggle ClearAllInCartItems button
+async function validateItemsInCart(){
     let checkVisiblity = 0;
-    /* for(i in items){
-        if(items[i].inCart === true){checkVisiblity++;}
-    } */
-    fetch('http://localhost:5000/validate-cart')
-    .then((response) => {
-        return response.json();
-     })
-     .then((data) => {
-        console.log(data);
-        clearItemBtn.style.visibility = data.length === 0 ? 'hidden' : 'visible';
-    });
-
-   
+    const response = await fetch('http://localhost:5000/validate-cart');
+    const data = await response.json();
+    clearItemBtn.style.visibility = data.length === 0 ? 'hidden' : 'visible'; 
 }
 
+//return specific item from DB
 async function checkInCart(value){
 
     let rspnse = await fetch(`http://localhost:5000/${value}`);
     let data = await rspnse.json();
-    return data;
+    return data[0];
     
 }
 
+//given specific item, will toggle correctly
+function inCartDecoration(item){
+    const hDiv = document.getElementById(`${item.text}`);
+
+    hDiv.style.backgroundColor = item.inCart ? 'rgb(159, 219, 186)' : 'white';
+    hDiv.style.textDecoration = item.inCart ? 'line-through' : 'none';
+}
+
+//Toggle in cart value in DB
 async function toggleCart(event){
     event.preventDefault();
-    let list = await checkInCart(event.target.value);
-    let data = list[0];
-    //const data = { text: value, inCart: false };
-    console.log(data.inCart);
-    data.inCart = data.inCart ? false : true;
-    if(data.inCart){
-        event.target.parentElement.style.backgroundColor = 'rgb(159, 219, 186)';
-        event.target.parentElement.style.textDecoration = 'line-through';
-    } else{
-        event.target.parentElement.style.backgroundColor = 'white';
-        event.target.parentElement.style.textDecoration = 'none';
-    }
+    let data = await checkInCart(event.target.value);
+    data.inCart = data.inCart ? false : true; 
+    inCartDecoration(data);
+   
     fetch('http://localhost:5000/toggle-cart', {
     method: 'POST', // or 'PUT'
     headers: {
@@ -199,24 +171,9 @@ async function toggleCart(event){
     },
     body: JSON.stringify(data),
     })
-    .then((response) => response.json())
-    .then((data) => {
-    console.log('Success:', data);
-    })
     .catch((error) => {
     console.error('Error:', error);
     });
     
     validateItemsInCart();
 }
-
-function findIndexOfItem(value){
-    for(i in items){
-        if(items[i].text === value){
-            return i;
-        }
-    }
-}
-
-
-
