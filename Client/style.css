@@ -28,32 +28,32 @@ nav{
 #itemContainer{
     width: 90%;
     height: 30px;
+    display: flex;
     padding: 20px 20px 20px 20px;
     margin: auto;
     align-items: center;
     max-width: 750px;
+    cursor: pointer;
 }
 
 .itemData{
-    width: 65%;;
+    width: 70%;
+    margin: auto;
     padding: 10px 0px;
-    margin-left: 5px;
     padding-left: 10px;
-    float: left;
     align-items: center;
     border-radius: 4px;
     border: none;
-    border: rgb(114, 121, 128) 2px solid;
+    border: rgb(54, 109, 190) 2px solid;
     font-family: 'Raleway', sans-serif;
 
 }
 
 .itemButton{
-    width: 23%;
+    width: 20%;
+    margin: auto;
     align-items: center;
-    padding: 12px 0px;
-    margin-right: 5px;
-    float: right;
+    padding: 12px 12px;
     border: none;
     background-color: rgb(54, 109, 190);
     border-radius: 4px;
@@ -78,7 +78,8 @@ footer{
     border-radius: 4px;
     background-color: white;
     line-height: 2.5em;
-    border: rgb(114, 121, 128) 2px solid
+    border: rgb(114, 121, 128) 2px solid;
+    box-shadow: 5px 3px 4px #888888;
 }
 
 .deleteButton{
@@ -97,26 +98,6 @@ footer{
     background-color: red;
     color: white;
     transition-duration: 300ms;
-}
-
-
-.inCartButton{
-    height: 100%;
-    float: right;
-    padding: 5px;
-    margin: 0px 10px 0px 0px;
-    border: none;
-    background-color: transparent;
-    color: rgb(24, 192, 100);
-    cursor: pointer;
-    font-family: 'Raleway', sans-serif;
-    transition-duration: 400ms;
-}
-
-.inCartButton:hover{
-    background-color: rgb(24, 192, 100);
-    color: white;
-    transition-duration: 400ms;
 }
 
 .clearInCartItems{
@@ -140,4 +121,41 @@ footer{
     background-color: red;
     color: white;
     transition-duration: 400ms;
+}
+
+#HomeForm{
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.keyInput{
+    width: 65%;
+    margin: auto;
+    padding: 10px 0px;
+    padding-left: 10px;
+    align-items: center;
+    border-radius: 4px;
+    border: none;
+    border: rgb(54, 109, 190) 2px solid;
+    font-family: 'Raleway', sans-serif;
+}
+
+.goToListButton{
+    width: 26%;
+    margin: auto;
+    align-items: center;
+    padding: 12px 12px;
+    border: none;
+    background-color: rgb(54, 109, 190);
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
 }

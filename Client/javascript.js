@@ -106,6 +106,7 @@ function addItem (item) {
     itemDiv.className = "itemStyle";
     itemDiv.id = item.text;
     itemDiv.innerText = item.text;
+    itemDiv.value = item.text;
 
     //create delete button to go in div
     let deleteButton = document.createElement("BUTTON");
@@ -113,22 +114,15 @@ function addItem (item) {
     deleteButton.innerText="Delete";
     deleteButton.value=item.text;
 
-    //creat cheIn button
-    let inCartButton = document.createElement("BUTTON");
-    inCartButton.className="inCartButton";
-    inCartButton.innerText="In Cart";
-    inCartButton.value=item.text;
-
     //append delete button to Div to container
     itemDiv.appendChild(deleteButton);
-    itemDiv.appendChild(inCartButton);
     document.getElementById("itemsList").appendChild(itemDiv);
 
 
     //clear input data
     itemValue.value = "";
     deleteButton.addEventListener("click", removeItem);
-    inCartButton.addEventListener("click", toggleCart);
+    itemDiv.addEventListener("click", toggleCart);
     
 }
 

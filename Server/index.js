@@ -24,9 +24,6 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
   const db = client.db(dbName);
   console.log(`connected to \'${dbName}\' database and \'${colName}\' collection`);
 
-  /* db.collection(colName, function(err, collection){
-        collection.find().pretty();
-  }); */
  app.get('/all-items', (req, res) => {
      let data = db.collection('groceryList').find().toArray()
      .then(results => {
