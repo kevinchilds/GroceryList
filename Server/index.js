@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const dbName = "Portfolio";
-const colName = "groceryList";
+const colName = "item";
 var assert = require('assert');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
@@ -25,7 +25,7 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
   console.log(`connected to \'${dbName}\' database and \'${colName}\' collection`);
 
  app.get('/all-items', (req, res) => {
-     let data = db.collection('groceryList').find().toArray()
+     let data = db.collection('item').find().toArray()
      .then(results => {
          console.log(results)
          res.json(results);
@@ -34,7 +34,7 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
  })
 
  app.get('/validate-cart', (req, res) => {
-    let data = db.collection('groceryList').find({ inCart: true}).toArray()
+    let data = db.collection('item').find({ inCart: true}).toArray()
     .then(results => {
         console.log(results);
         res.json(results);
@@ -51,8 +51,17 @@ app.get('/:id', (req, res) => {
     .catch(error => console.error(error))    
 })
 
+app.get('/:id', (req, res) => {
+    let data = db.collection('item').find({ text: req.params.id}).toArray()
+    .then(results => {
+        console.log(results);
+        res.json(results);
+    })
+    .catch(error => console.error(error))    
+})
+
 app.post('/toggle-cart', (req, res) => {
-    let data = db.collection('groceryList').update({ text: req.body.text},
+    let data = db.collection('item').update({ text: req.body.text},
         {
             $set: {
                 inCart: req.body.inCart
@@ -67,7 +76,7 @@ app.post('/toggle-cart', (req, res) => {
 })
 
 app.post('/add-item', (req, res) => {
-    let data = db.collection('groceryList').insert({
+    let data = db.collection('item').insert({
         text: req.body.text,
         inCart: req.body.inCart
     })
@@ -79,7 +88,7 @@ app.post('/add-item', (req, res) => {
 })
 
 app.post('/remove-item', (req, res) => {
-    let data = db.collection('groceryList').remove({
+    let data = db.collection('item').remove({
         text: req.body.text,
     })
     .then(results => {
@@ -90,7 +99,7 @@ app.post('/remove-item', (req, res) => {
 })
 
 app.post('/remove-incart-items', (req, res) => {
-    let data = db.collection('groceryList').remove({
+    let data = db.collection('item').remove({
         inCart: true
     })
     .then(results => {
