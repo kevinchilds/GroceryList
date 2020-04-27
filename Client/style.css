@@ -3,8 +3,8 @@ html, body{
     margin: 0px;
     height: 100%;
     width: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(215, 218, 221);
+    font-family: 'Raleway', sans-serif;
+    background-color: rgb(242, 242, 243);
 }
 
 nav{
@@ -19,43 +19,47 @@ nav{
 #container{
     width: 90%;
     height:auto;
-    padding: 10px;
+    padding: 10px 10px 30px 10px;
     margin: auto;
     margin-top: 30px;
-    background-color: rgb(46, 66, 97);
     max-width: 800px;
     border-radius: 8px;
 }
 #itemContainer{
     width: 90%;
     height: 30px;
-    padding: 20px;
+    padding: 20px 20px 20px 20px;
     margin: auto;
     align-items: center;
     max-width: 750px;
 }
 
 .itemData{
-    width: 73%;;
+    width: 65%;;
     padding: 10px 0px;
+    margin-left: 5px;
     padding-left: 10px;
     float: left;
     align-items: center;
     border-radius: 4px;
     border: none;
+    border: rgb(114, 121, 128) 2px solid;
+    font-family: 'Raleway', sans-serif;
 
 }
 
 .itemButton{
     width: 23%;
     align-items: center;
-    padding: 10px 0px;
+    padding: 12px 0px;
+    margin-right: 5px;
     float: right;
     border: none;
     background-color: rgb(54, 109, 190);
     border-radius: 4px;
     color: white;
     cursor: pointer;
+    font-family: 'Raleway', sans-serif;
 }
 
 footer{
@@ -74,31 +78,45 @@ footer{
     border-radius: 4px;
     background-color: white;
     line-height: 2.5em;
+    border: rgb(114, 121, 128) 2px solid
 }
 
 .deleteButton{
-    height: 85%;
+    height: 100%;
     float: right;
     padding: 5px;
-    margin: 3px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
     border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    transition-duration: 300ms;
+}
+.deleteButton:hover{
     background-color: red;
     color: white;
-    cursor: pointer;
-    border-radius: 4px;
+    transition-duration: 300ms;
 }
 
+
 .inCartButton{
-    height: 85%;
+    height: 100%;
     float: right;
     padding: 5px;
-    margin: 3px 10px 0px 0px;
+    margin: 0px 10px 0px 0px;
     border: none;
+    background-color: transparent;
+    color: rgb(24, 192, 100);
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    transition-duration: 400ms;
+}
+
+.inCartButton:hover{
     background-color: rgb(24, 192, 100);
     color: white;
-    cursor: pointer;
-    border-radius: 4px;
-
+    transition-duration: 400ms;
 }
 
 .clearInCartItems{
@@ -107,12 +125,19 @@ footer{
     padding: 10px;
     margin: auto;
     margin-top: 10px;
-    background-color: red;
-    color: white;
+    background-color: transparent;
+    color: red;
     max-width: 850px;
     border-radius: 4px;
     border: none;
-    font-weight: bold;
     visibility: hidden;
     cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    transition-duration: 400ms;
+}
+
+.clearInCartItems:hover{
+    background-color: red;
+    color: white;
+    transition-duration: 400ms;
 }
