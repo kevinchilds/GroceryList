@@ -24,8 +24,8 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
   const db = client.db(dbName);
   console.log(`connected to \'${dbName}\' database and \'${colName}\' collection`);
 
- app.get('/all-items', (req, res) => {
-     let data = db.collection('item').find().toArray()
+ app.get('/all-items/:id', (req, res) => {
+     let data = db.collection('item').find({listkey: req.params.id}).toArray()
      .then(results => {
          console.log(results)
          res.json(results);
@@ -42,8 +42,9 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
     .catch(error => console.error(error))    
 })
 
-app.get('/:id', (req, res) => {
-    let data = db.collection('groceryList').find({ text: req.params.id}).toArray()
+app.get('/grocery-list/:id', (req, res) => {
+    console.log(req.params.id);
+    let data = db.collection('groceryList').find({ listkey: req.params.id}).toArray()
     .then(results => {
         console.log(results);
         res.json(results);
@@ -78,7 +79,19 @@ app.post('/toggle-cart', (req, res) => {
 app.post('/add-item', (req, res) => {
     let data = db.collection('item').insert({
         text: req.body.text,
-        inCart: req.body.inCart
+        inCart: req.body.inCart,
+        listkey: req.body.listkey
+    })
+    .then(results => {
+        console.log(results);
+        res.json(results);
+    })
+    .catch(error => console.error(error))
+})
+
+app.post('/add-list', (req, res) => {
+    let data = db.collection('groceryList').insert({
+        listkey: req.body.listkey
     })
     .then(results => {
         console.log(results);
