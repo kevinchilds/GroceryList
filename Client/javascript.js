@@ -3,6 +3,7 @@ const todoButton = document.querySelector(".itemButton");
 const itemValue = document.querySelector(".itemData");
 const clearItemBtn = document.querySelector(".clearInCartItems");
 const navMessage = document.querySelector(".navClass");
+const listkeyIF = document.getElementById('listkeyIF');
 
 //Event
 todoButton.addEventListener("click", newItem);
@@ -13,15 +14,31 @@ window.onload = pullFromDB;
 
 //initial pull from DB
 async function pullFromDB(){
-    //const response = await fetch(`http://localhost:5000/all-items/${ID}`);
-    const response = await fetch(`${window.location.href}`);
-    const data = await response.json();
-//create html items
-    for(i in data){
-        addItem(data[i]);
-        inCartDecoration(data[i]);   
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    console.log(urlParams);
+    const keyID = urlParams.get('listkey');
+    
+    if(keyID !== null){
+        listkeyIF.value = `${keyID}`;
+        const response = await fetch(`http://localhost:5000/all-items/${keyID}`);
+        const data = await response.json();
+        //create html items
+        for(i in data){
+            addItem(data[i]);
+            inCartDecoration(data[i]);   
+        }
+        validateItemsInCart();
     }
-    validateItemsInCart(); 
+    else{
+        listkeyIF.value = '';
+        todoButton.style.visibility = 'hidden';
+        itemValue.style.visibility = 'hidden';
+    }
+
+    
+
 }
 
 async function clearItems(){
@@ -140,7 +157,7 @@ async function validateItemsInCart(){
 //return specific item from DB
 async function checkInCart(value){
 
-    let rspnse = await fetch(`http://localhost:5000/${value}`);
+    let rspnse = await fetch(`http://localhost:5000/item/${value}`);
     let data = await rspnse.json();
     return data[0];
     

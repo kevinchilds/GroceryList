@@ -42,17 +42,27 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
     .catch(error => console.error(error))    
 })
 
-app.get('/grocery-list/:id', (req, res) => {
+/* app.get('/:id', (req, res) => {
     console.log(req.params.id);
+    var options = {
+        root: path.join(__dirname, '../Client')
+      }
+
     let data = db.collection('groceryList').find({ listkey: req.params.id}).toArray()
     .then(results => {
         console.log(results);
-        res.json(results);
+        res.sendFile(`http://localhost:5000/?${req.params.id}`, options, function (err) {
+            if (err) {
+              next(err)
+            } else {
+              console.log('Sent:', fileName)
+            }
+          });
     })
     .catch(error => console.error(error))    
-})
+}) */
 
-app.get('/:id', (req, res) => {
+app.get('/item/:id', (req, res) => {
     let data = db.collection('item').find({ text: req.params.id}).toArray()
     .then(results => {
         console.log(results);
