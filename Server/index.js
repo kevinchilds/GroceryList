@@ -33,8 +33,8 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
      .catch(error => console.error(error))    
  })
 
- app.get('/validate-cart', (req, res) => {
-    let data = db.collection('item').find({ inCart: true}).toArray()
+ app.get('/validate-cart/:id', (req, res) => {
+    let data = db.collection('item').find({ listkey: req.params.id, inCart: true}).toArray()
     .then(results => {
         console.log(results);
         res.json(results);
@@ -62,8 +62,8 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
     .catch(error => console.error(error))    
 }) */
 
-app.get('/item/:id', (req, res) => {
-    let data = db.collection('item').find({ text: req.params.id}).toArray()
+app.get('/:item/:id', (req, res) => {
+    let data = db.collection('item').find({ listkey: req.params.id, text: req.params.item}).toArray()
     .then(results => {
         console.log(results);
         res.json(results);
@@ -71,8 +71,8 @@ app.get('/item/:id', (req, res) => {
     .catch(error => console.error(error))    
 })
 
-app.post('/toggle-cart', (req, res) => {
-    let data = db.collection('item').update({ text: req.body.text},
+app.post('/toggle-cart/:id', (req, res) => {
+    let data = db.collection('item').update({ text: req.body.text, listkey: req.params.id},
         {
             $set: {
                 inCart: req.body.inCart
@@ -113,6 +113,7 @@ app.post('/add-list', (req, res) => {
 app.post('/remove-item', (req, res) => {
     let data = db.collection('item').remove({
         text: req.body.text,
+        listkey: req.body.listkey
     })
     .then(results => {
         console.log(results);
@@ -121,8 +122,9 @@ app.post('/remove-item', (req, res) => {
     .catch(error => console.error(error))
 })
 
-app.post('/remove-incart-items', (req, res) => {
+app.post('/remove-incart-items/:id', (req, res) => {
     let data = db.collection('item').remove({
+        listkey: req.params.id,
         inCart: true
     })
     .then(results => {

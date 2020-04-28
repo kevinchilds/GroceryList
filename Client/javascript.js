@@ -1,3 +1,5 @@
+//Global
+let keyID = '';
 //Selectors
 const todoButton = document.querySelector(".itemButton");
 const itemValue = document.querySelector(".itemData");
@@ -12,13 +14,13 @@ clearItemBtn.addEventListener("click", clearItems);
 //ON LOAD FUNCTION CALL
 window.onload = pullFromDB;
 
-//initial pull from DB
+//initial pull from DB - working:4/28 
 async function pullFromDB(){
     const queryString = window.location.search;
     console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
     console.log(urlParams);
-    const keyID = urlParams.get('listkey');
+    keyID = urlParams.get('listkey');
     
     if(keyID !== null){
         listkeyIF.value = `${keyID}`;
@@ -43,7 +45,7 @@ async function pullFromDB(){
 
 async function clearItems(){
 //get all data in collection
-    const allItems = await fetch('http://localhost:5000/all-items')
+    const allItems = await fetch(`http://localhost:5000/all-items/${keyID}`)
     .catch((error) => {
         console.error('Error:', error);
         });
@@ -57,7 +59,7 @@ async function clearItems(){
     }
     
  //api call to remove items in cart in backend   
-    const removedItems = await fetch('http://localhost:5000/remove-incart-items', {
+    const removedItems = await fetch(`http://localhost:5000/remove-incart-items/${keyID}`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
@@ -78,7 +80,8 @@ async function removeItem(event) {
     event.preventDefault();
 
     const item = {
-        text: event.target.value
+        text: event.target.value,
+        listkey: keyID
     }
 
     const response = await fetch('http://localhost:5000/remove-item', {
@@ -102,7 +105,7 @@ async function newItem (event) {
     const item={
         text: itemValue.value,
         inCart: false,
-        listkey: ID
+        listkey: keyID
     };
     const response = await fetch('http://localhost:5000/add-item', {
         method: 'POST', // or 'PUT'
@@ -149,7 +152,7 @@ function addItem (item) {
 //toggle ClearAllInCartItems button
 async function validateItemsInCart(){
     let checkVisiblity = 0;
-    const response = await fetch('http://localhost:5000/validate-cart');
+    const response = await fetch(`http://localhost:5000/validate-cart/${keyID}`);
     const data = await response.json();
     clearItemBtn.style.visibility = data.length === 0 ? 'hidden' : 'visible'; 
 }
@@ -157,7 +160,7 @@ async function validateItemsInCart(){
 //return specific item from DB
 async function checkInCart(value){
 
-    let rspnse = await fetch(`http://localhost:5000/item/${value}`);
+    let rspnse = await fetch(`http://localhost:5000/${value}/${keyID}`);
     let data = await rspnse.json();
     return data[0];
     
@@ -175,10 +178,11 @@ function inCartDecoration(item){
 async function toggleCart(event){
     event.preventDefault();
     let data = await checkInCart(event.target.value);
+    console.log(data);
     data.inCart = data.inCart ? false : true; 
     inCartDecoration(data);
    
-    fetch('http://localhost:5000/toggle-cart', {
+    fetch(`http://localhost:5000/toggle-cart/${keyID}`, {
     method: 'POST', // or 'PUT'
     headers: {
         'Content-Type': 'application/json',
