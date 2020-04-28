@@ -3,7 +3,6 @@ const todoButton = document.querySelector(".itemButton");
 const itemValue = document.querySelector(".itemData");
 const clearItemBtn = document.querySelector(".clearInCartItems");
 const navMessage = document.querySelector(".navClass");
-const ID = sessionStorage.getItem('KEY');
 
 //Event
 todoButton.addEventListener("click", newItem);
@@ -14,9 +13,8 @@ window.onload = pullFromDB;
 
 //initial pull from DB
 async function pullFromDB(){
-    navMessage.innerText = `Grocery List: ${ID}`;
-    console.log(ID);
-    const response = await fetch(`http://localhost:5000/all-items/${ID}`);
+    //const response = await fetch(`http://localhost:5000/all-items/${ID}`);
+    const response = await fetch(`${window.location.href}`);
     const data = await response.json();
 //create html items
     for(i in data){

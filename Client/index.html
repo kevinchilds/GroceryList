@@ -7,23 +7,31 @@
     </head>
     <body>
         <header>
-            <nav>Grocery List
+            <nav class = navClass>
+                <input type="text" placeholder="Testing Branches">
+                </input>
+                Grocery List
                 <button class = "createNewList">
                     Create a new list
                 </button>
             </nav>
         </header>
-        <div id="homepageContainer">
-                <form id = "HomeForm">
-                    <input class = "keyInput" type="text" placeholder="List Key">
-                    <button class = "goToListButton" type="submit">
-                        GO TO LIST
+        <div id="container">
+            <div id="itemsList">
+                <form id="itemContainer">
+                    <input class ="itemData" type="text" placeholder="item">
+                    <button class="itemButton" type="submit">
+                        Submit
                     </button>
                 </form>
-                    
+            </div>
+            
+            <button class="clearInCartItems" type="submit">
+                CLEAR ITEMS IN CART
+            </button>
         </div>
         
         
-        <script src="key.js"></script>
+        <script src="javascript.js"></script>
     </body>
 </html>
