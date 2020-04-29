@@ -7,11 +7,13 @@ const clearItemBtn = document.querySelector(".clearInCartItems");
 const navMessage = document.querySelector(".navText");
 const listkeyIF = document.getElementById('listkeyIF');
 const createNewListButton = document.querySelector('.createNewList');
+const keyButton = document.querySelector('.goToList');
 
 //Event
 todoButton.addEventListener("click", newItem);
 clearItemBtn.addEventListener("click", clearItems);
 createNewListButton.addEventListener("click", createListKey);
+keyButton.addEventListener("click", checkKey);
 
 //ON LOAD FUNCTION CALL
 window.onload = pullFromDB;
@@ -19,22 +21,26 @@ window.onload = pullFromDB;
 //initial pull from DB - working:4/28 
 async function pullFromDB(){
     const queryString = window.location.search;
-    console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
-    console.log(urlParams);
     keyID = urlParams.get('listkey');
     
+    
     if(keyID !== null){
-        //listkeyIF.value = `${keyID}`;
-        navMessage.innerText = `Grocery List: ${keyID}`;
-        const response = await fetch(`http://localhost:5000/all-items/${keyID}`);
-        const data = await response.json();
-        //create html items
-        for(i in data){
-            addItem(data[i]);
-            inCartDecoration(data[i]);   
+        listkeyIF.value = `${keyID}`;
+        const found = await checkIfKeyExist(listkeyIF.value);
+        if(found){
+            const response = await fetch(`http://localhost:5000/all-items/${keyID}`);
+            const data = await response.json();
+            //create html items
+            for(i in data){
+                addItem(data[i]);
+                inCartDecoration(data[i]);   
+            }
+            validateItemsInCart();
+        }else{
+            alert(`List: ${keyID} not found`);
+            window.location.href = `http://localhost:5000/`;
         }
-        validateItemsInCart();
     }
     else{
         listkeyIF.value = '';
@@ -45,6 +51,8 @@ async function pullFromDB(){
     
 
 }
+
+
 
 async function createListKey (event){
     event.preventDefault();
@@ -67,6 +75,28 @@ async function createListKey (event){
     const data = await response.json();
 
     window.location.href = `http://localhost:5000/?listkey=${data.ops[0].listkey}`;
+}
+
+async function checkIfKeyExist(value){
+    const response = await fetch(`http://localhost:5000/grocery-list/${value}`);
+    const data = await response.json();
+    
+    const found = data.length > 0 ? true : false;
+
+    return found;
+}
+
+async function checkKey (event){
+    event.preventDefault();
+    const found = checkIfKeyExist(listkeyIF.value);
+    if (found){
+        window.location.href = `http://localhost:5000/?listkey=${listkeyIF.value}`;
+    }else{
+        alert(`LIST ${listkeyIF.value} NOT FOUND`);
+        listkeyIF.value = '';
+        window.location.href = `http://localhost:5000/`;
+    }
+ 
 }
 
 async function clearItems(){

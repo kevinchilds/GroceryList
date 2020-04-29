@@ -42,6 +42,15 @@ MongoClient.connect("mongodb+srv://kchilds2020:Gertie2018@redesignforme-9mmku.az
     .catch(error => console.error(error))    
 })
 
+app.get('/grocery-list/:id', (req, res) => {
+    let data = db.collection('groceryList').find({ listkey: req.params.id}).toArray()
+    .then(results => {
+        console.log(results);
+        res.json(results);
+    })
+    .catch(error => console.error(error))    
+})
+
 /* app.get('/:id', (req, res) => {
     console.log(req.params.id);
     var options = {
