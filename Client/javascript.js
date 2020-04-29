@@ -4,12 +4,14 @@ let keyID = '';
 const todoButton = document.querySelector(".itemButton");
 const itemValue = document.querySelector(".itemData");
 const clearItemBtn = document.querySelector(".clearInCartItems");
-const navMessage = document.querySelector(".navClass");
+const navMessage = document.querySelector(".navText");
 const listkeyIF = document.getElementById('listkeyIF');
+const createNewListButton = document.querySelector('.createNewList');
 
 //Event
 todoButton.addEventListener("click", newItem);
 clearItemBtn.addEventListener("click", clearItems);
+createNewListButton.addEventListener("click", createListKey);
 
 //ON LOAD FUNCTION CALL
 window.onload = pullFromDB;
@@ -23,7 +25,8 @@ async function pullFromDB(){
     keyID = urlParams.get('listkey');
     
     if(keyID !== null){
-        listkeyIF.value = `${keyID}`;
+        //listkeyIF.value = `${keyID}`;
+        navMessage.innerText = `Grocery List: ${keyID}`;
         const response = await fetch(`http://localhost:5000/all-items/${keyID}`);
         const data = await response.json();
         //create html items
@@ -41,6 +44,29 @@ async function pullFromDB(){
 
     
 
+}
+
+async function createListKey (event){
+    event.preventDefault();
+
+    const newKey = `${Math.random().toString(36).substr(2, 9)}`;
+    const groceryList = {
+        listkey: newKey
+    };
+
+    const response = await fetch(`http://localhost:5000/add-list`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(groceryList),
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    const data = await response.json();
+
+    window.location.href = `http://localhost:5000/?listkey=${data.ops[0].listkey}`;
 }
 
 async function clearItems(){

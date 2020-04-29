@@ -42,6 +42,5 @@ async function createListKey (event){
     const data = await response.json();
 
     key.value = '';
-    sessionStorage.setItem("KEY", `${data.ops[0].listkey}`);
-    window.location.href = "http://localhost:5000/grocery-list.html";
+    window.location.href = `http://localhost:5000/?listkey=${data.ops[0].listkey}`;
 }
