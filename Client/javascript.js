@@ -29,7 +29,7 @@ async function pullFromDB(){
         listkeyIF.value = `${keyID}`;
         const found = await checkIfKeyExist(listkeyIF.value);
         if(found){
-            const response = await fetch(`http://localhost:5000/all-items/${keyID}`);
+            const response = await fetch(`/all-items/${keyID}`);
             const data = await response.json();
             //create html items
             for(i in data){
@@ -39,7 +39,7 @@ async function pullFromDB(){
             validateItemsInCart();
         }else{
             alert(`List: ${keyID} not found`);
-            window.location.href = `http://localhost:5000/`;
+            window.location.href = `/`;
         }
     }
     else{
@@ -62,7 +62,7 @@ async function createListKey (event){
         listkey: newKey
     };
 
-    const response = await fetch(`http://localhost:5000/add-list`, {
+    const response = await fetch(`/add-list`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
@@ -74,11 +74,11 @@ async function createListKey (event){
         });
     const data = await response.json();
 
-    window.location.href = `http://localhost:5000/?listkey=${data.ops[0].listkey}`;
+    window.location.href = `/?listkey=${data.ops[0].listkey}`;
 }
 
 async function checkIfKeyExist(value){
-    const response = await fetch(`http://localhost:5000/grocery-list/${value}`);
+    const response = await fetch(`/grocery-list/${value}`);
     const data = await response.json();
     
     const found = data.length > 0 ? true : false;
@@ -90,18 +90,18 @@ async function checkKey (event){
     event.preventDefault();
     const found = checkIfKeyExist(listkeyIF.value);
     if (found){
-        window.location.href = `http://localhost:5000/?listkey=${listkeyIF.value}`;
+        window.location.href = `/?listkey=${listkeyIF.value}`;
     }else{
         alert(`LIST ${listkeyIF.value} NOT FOUND`);
         listkeyIF.value = '';
-        window.location.href = `http://localhost:5000/`;
+        window.location.href = `/`;
     }
  
 }
 
 async function clearItems(){
 //get all data in collection
-    const allItems = await fetch(`http://localhost:5000/all-items/${keyID}`)
+    const allItems = await fetch(`/all-items/${keyID}`)
     .catch((error) => {
         console.error('Error:', error);
         });
@@ -115,7 +115,7 @@ async function clearItems(){
     }
     
  //api call to remove items in cart in backend   
-    const removedItems = await fetch(`http://localhost:5000/remove-incart-items/${keyID}`, {
+    const removedItems = await fetch(`/remove-incart-items/${keyID}`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ async function removeItem(event) {
         listkey: keyID
     }
 
-    const response = await fetch('http://localhost:5000/remove-item', {
+    const response = await fetch(`/remove-item`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ async function newItem (event) {
         inCart: false,
         listkey: keyID
     };
-    const response = await fetch('http://localhost:5000/add-item', {
+    const response = await fetch(`/add-item`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
@@ -208,7 +208,7 @@ function addItem (item) {
 //toggle ClearAllInCartItems button
 async function validateItemsInCart(){
     let checkVisiblity = 0;
-    const response = await fetch(`http://localhost:5000/validate-cart/${keyID}`);
+    const response = await fetch(`/validate-cart/${keyID}`);
     const data = await response.json();
     clearItemBtn.style.visibility = data.length === 0 ? 'hidden' : 'visible'; 
 }
@@ -216,7 +216,7 @@ async function validateItemsInCart(){
 //return specific item from DB
 async function checkInCart(value){
 
-    let rspnse = await fetch(`http://localhost:5000/${value}/${keyID}`);
+    let rspnse = await fetch(`/${value}/${keyID}`);
     let data = await rspnse.json();
     return data[0];
     
@@ -238,7 +238,7 @@ async function toggleCart(event){
     data.inCart = data.inCart ? false : true; 
     inCartDecoration(data);
    
-    fetch(`http://localhost:5000/toggle-cart/${keyID}`, {
+    fetch(`/toggle-cart/${keyID}`, {
     method: 'POST', // or 'PUT'
     headers: {
         'Content-Type': 'application/json',
