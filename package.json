@@ -1,0 +1,28 @@
+{
+  "name": "GroceryList",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node Server/index",
+    "dev": "nodemon Server/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kchilds2020/GroceryList.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kchilds2020/GroceryList/issues"
+  },
+  "homepage": "https://github.com/kchilds2020/GroceryList#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "nodemon": "^2.0.3"
+  }
+}
