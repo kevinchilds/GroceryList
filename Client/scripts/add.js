@@ -6,14 +6,13 @@ async function newItem (event) {
         inCart: false,
         listkey: keyID
     };
-    var jsonTempStringified = JSON.stringify(item);
-    //var jsonTempStringifiedParsed = JSON.parse(jsonTempStringified);
+
     const response = await fetch(`/add-item`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
         },
-        body: 'f=json&features=' + jsonTempStringified,
+        body: JSON.stringify(item),
         })
         .catch((error) => {
             console.error('Error:', error);
