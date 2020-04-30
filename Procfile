@@ -1,1 +1,1 @@
-node Server/index
+npm run start
