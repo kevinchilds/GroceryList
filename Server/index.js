@@ -10,10 +10,11 @@ app.use(bodyParser.json());
 //location of frontend
 //app.use(express.static(path.join(__dirname,'../Client')));
 
-if(process.env.NODE_ENV === 'production'){
+/* if(process.env.NODE_ENV === 'production'){
     //set static folder
     app.use(express.static('../Client'));
-}
+} */
+app.use(express.static('../Client'));
 app.get('*', (request, response) => {
 	response.sendFile(path.join(__dirname, '../Client', 'index.html'));
 });
