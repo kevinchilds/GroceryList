@@ -6,7 +6,7 @@ const dbName = "Portfolio";
 var assert = require('assert');
 
 
-MongoClient.connect(process.env.DB_CONNECTION_STRING, {useUnifiedTopology: true} ,function(err, client) {
+MongoClient.connect('mongodb+srv://GroceryList:DbwflWOmW9Qagh4f@redesignforme-9mmku.azure.mongodb.net', {useUnifiedTopology: true} ,function(err, client) {
     if(err) { return console.dir(err);}
     const db = client.db(dbName);
 
