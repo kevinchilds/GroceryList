@@ -5,10 +5,11 @@ const app = express();
 var bodyParser = require('body-parser');
 
 
-app.use(bodyParser.json());
+
 
 //location of frontend
 app.use(express.static(path.join(__dirname,'../Client')));
+app.use(bodyParser.json());
 
 
 //location of APIs
