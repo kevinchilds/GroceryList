@@ -8,6 +8,7 @@ const navMessage = document.querySelector(".navText");
 const listkeyIF = document.getElementById('listkeyIF');
 const createNewListButton = document.querySelector('.createNewList');
 const keyButton = document.querySelector('.goToList');
+const instructions = document.getElementById('instructions');
 
 //Event
 todoButton.addEventListener("click", newItem);
@@ -29,6 +30,9 @@ async function pullFromDB(){
         listkeyIF.value = `${keyID}`;
         const found = await checkIfKeyExist(listkeyIF.value);
         if(found){
+            instructions.remove();
+            todoButton.style.visibility = 'visible';
+            itemValue.style.visibility = 'visible';
             const response = await fetch(`/all-items/${keyID}`);
             const data = await response.json();
             //create html items
@@ -44,8 +48,7 @@ async function pullFromDB(){
     }
     else{
         listkeyIF.value = '';
-        todoButton.style.visibility = 'hidden';
-        itemValue.style.visibility = 'hidden';
+        instructions.style.visibility = 'visible';
     }
 
     
