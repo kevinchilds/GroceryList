@@ -69,6 +69,7 @@ async function createListKey (event){
             console.error('Error:', error);
         });
     const data = await response.json();
+    console.log(data);
 
     window.location.href = `/?listkey=${data.ops[0].listkey}`;
 }
