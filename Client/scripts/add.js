@@ -6,12 +6,14 @@ async function newItem (event) {
         inCart: false,
         listkey: keyID
     };
+    var jsonTempStringified = JSON.stringify(item);
+    //var jsonTempStringifiedParsed = JSON.parse(jsonTempStringified);
     const response = await fetch(`/add-item`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(item),
+        body: 'f=json&features=' + jsonTempStringified,
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -55,13 +57,14 @@ async function createListKey (event){
     const groceryList = {
         listkey: newKey
     };
-
+    var jsonTempStringified = JSON.stringify(groceryList);
+    //var jsonTempStringifiedParsed = JSON.parse(jsonTempStringified);
     const response = await fetch(`/add-list`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(groceryList),
+        body: 'f=json&features=' + jsonTempStringified,
         })
         .catch((error) => {
             console.error('Error:', error);
