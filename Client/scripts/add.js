@@ -57,14 +57,13 @@ async function createListKey (event){
     const groceryList = {
         listkey: newKey
     };
-    var jsonTempStringified = JSON.stringify(groceryList);
-    //var jsonTempStringifiedParsed = JSON.parse(jsonTempStringified);
+    console.log(`JSON.stringify(groceryList)= ${JSON.stringify(groceryList)}`);
     const response = await fetch(`/add-list`, {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
         },
-        body: 'f=json&features=' + jsonTempStringified,
+        body: JSON.stringify(groceryList),
         })
         .catch((error) => {
             console.error('Error:', error);
