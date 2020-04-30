@@ -4,16 +4,24 @@ html, body{
     height: 100%;
     width: 100%;
     font-family: 'Raleway', sans-serif;
-    background-image: linear-gradient( #d8e7f0, white);
+    background-image: linear-gradient(rgb(218, 229, 238), rgb(213, 231, 247));
+    
 }
 
 nav{
     background-color:rgb(46, 87, 148);
-    height: 50px;
+    height: 70px;
     text-align: center;
     line-height: 3em;
     color: white;
+    box-shadow: 3px 2px 8px #888888;
 
+}
+.text{
+    float: left;
+    font-size: small;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 #container{
@@ -26,6 +34,7 @@ nav{
     border-radius: 8px;
     
 }
+
 
 #homepageContainer{
     height: 100%;
@@ -167,12 +176,12 @@ footer{
 
 .createNewList{
     padding: 4px;
-    border: white 1px solid;
+    border: black 1px solid;
     background-color: white;
     border-radius: 4px;
     float: right;
-    margin-top: 11px;
-    margin-right: 5px;
+    margin-top: 21px;
+    margin-right: 10px;
     color: black;
     cursor: pointer;
     font-family: 'Raleway', sans-serif;
@@ -193,17 +202,14 @@ footer{
     float: left;
     width: 85px;
     margin-left: 5px;
-    margin-top: 11px;
+    margin-top: 21px;
     padding: 4px;
-    border: white 1px solid;
+    border: black 1px solid;
     border-right: none;
     border-radius: 4px 0px 0px 4px;
-    background-color: transparent;
-    color: white;
+    background-color: white;
+    color: black;
     font-family: 'Raleway', sans-serif;
-}
-#listkeyIF:hover{
-    border: white 1px solid;
 }
 
 .navText{
@@ -217,19 +223,19 @@ footer{
 .goToList{
     padding:4px;
     float: left;
-    margin-top: 11px;
-    border: white 1px solid;
+    margin-top: 21px;
+    border: black 1px solid;
+    border-left: none;
     border-radius: 0px 4px 4px 0px;
     background-color: white;
     color: black;
     cursor: pointer;
-
+    font-family: 'Raleway', sans-serif;
     transition-duration: 400ms;
 }
 .goToList:hover{
-    background-color: rgb(46, 87, 148);
+    background-color: rgb(74, 175, 113);
     color: white;
-    border: white 1px solid;
 
     transition-duration: 400ms;
 }
