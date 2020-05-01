@@ -6,12 +6,12 @@ var bodyParser = require('body-parser');
 
 
 
-
+app.use(bodyParser.json());
 //location of frontend
 app.use(express.static(path.join(__dirname,'../Client')));
 app.set('view engine','ejs');
 app.get('/', (req, res) => res.render('index'))
-app.use(bodyParser.json());
+
 
 
 //location of APIs
