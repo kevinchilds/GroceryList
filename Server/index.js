@@ -9,10 +9,8 @@ var bodyParser = require('body-parser');
 
 //location of frontend
 app.use(express.static(path.join(__dirname,'../Client')));
-
-app.get('*', (request, response) => {
-	response.sendFile(path.join(__dirname, '../Client', 'index.html'));
-});
+app.set('view engine','ejs');
+app.get('/', (req, res) => res.render('index'))
 app.use(bodyParser.json());
 
 
