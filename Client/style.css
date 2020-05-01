@@ -140,12 +140,6 @@ footer{
     color: red;
     cursor: pointer;
     font-family: 'Raleway', sans-serif;
-    transition-duration: 300ms;
-}
-.deleteButton:hover{
-    background-color: red;
-    color: white;
-    transition-duration: 300ms;
 }
 
 .clearInCartItems{
@@ -154,14 +148,15 @@ footer{
     padding: 10px;
     margin: auto;
     margin-top: 10px;
-    background-color: transparent;
-    color: red;
+    background-color: rgb(236, 159, 159);
+    color: black;
     max-width: 850px;
     border-radius: 4px;
     border: none;
     visibility: hidden;
     cursor: pointer;
     font-family: 'Raleway', sans-serif;
+    box-shadow: 1px 1px 2px black;
     transition-duration: 400ms;
 }
 
@@ -234,12 +229,12 @@ footer{
     margin-top: 16px;
     padding: 10px;
     border: none;
-    border-right: none;
+    border-right: white 1px solid;
     border-radius: 4px 0px 0px 4px;
     background-color: white;
     color: black;
     font-family: 'Raleway', sans-serif;
-    box-shadow: 1px 1px 4px black;
+    box-shadow: 1px 1px 2px black;
 }
 
 .navText{
@@ -257,7 +252,7 @@ footer{
     border: none;
     border-left: none;
     border-radius: 0px 4px 4px 0px;
-    background-color: white;
+    background-color: rgb(48, 167, 121);
     color: black;
     cursor: pointer;
     font-family: 'Raleway', sans-serif;
