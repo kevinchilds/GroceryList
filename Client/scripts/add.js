@@ -52,23 +52,27 @@ function addItem (item) {
 async function createListKey (event){
     event.preventDefault();
 
-    const newKey = `${Math.random().toString(36).substr(2, 9)}`;
-    const groceryList = {
-        listkey: newKey
-    };
-    console.log(`JSON.stringify(groceryList)= ${JSON.stringify(groceryList)}`);
-    const response = await fetch(`/add-list`, {
-        method: 'POST', // or 'PUT'
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(groceryList),
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    const data = await response.json();
-    console.log(data);
+    const vdate = confirm("Are you sure you want to create a new list?");
+    if(vdate){
 
-    window.location.href = `/?listkey=${data.ops[0].listkey}`;
+        const newKey = `${Math.random().toString(36).substr(2, 9)}`;
+        const groceryList = {
+            listkey: newKey
+        };
+        console.log(`JSON.stringify(groceryList)= ${JSON.stringify(groceryList)}`);
+        const response = await fetch(`/add-list`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(groceryList),
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        const data = await response.json();
+        console.log(data);
+
+        window.location.href = `/?listkey=${data.ops[0].listkey}`;
+    }
 }
