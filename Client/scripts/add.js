@@ -1,24 +1,28 @@
 //add new item to database
 async function newItem (event) {
     event.preventDefault();
-    const item={
-        text: itemValue.value,
-        inCart: false,
-        listkey: keyID
-    };
+    if(itemValue.value !== ''){
+        const item={
+            text: itemValue.value,
+            inCart: false,
+            listkey: keyID
+        };
 
-    const response = await fetch(`/add-item`, {
-        method: 'POST', // or 'PUT'
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    const data = await response.json();
-    addItem(item);    
+        const response = await fetch(`/add-item`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(item),
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        const data = await response.json();
+        addItem(item);    
+    }else{
+        alert('Item cannot be empty');
+    }
 }
 
 //create html item

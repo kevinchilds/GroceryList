@@ -19,19 +19,19 @@ nav{
 }
 #instructions{
     width: 85%;
-    max-width: 500px;
+    max-width: 600px;
     margin: auto;
     margin-top: 100px;
     border-radius: 8px;
     padding: 20px;
     background-color: white;
-    box-shadow: 1px 2px 4px black;
+    box-shadow: 4px 4px 6px rgb(40, 60, 90);
     transition-duration: 200ms;
     visibility: hidden;
 }
 
 #instructions:hover{
-    box-shadow: 1px 2px 8px black;
+    box-shadow: 4px 4px 4px rgb(40, 60, 90);
 
     transition-duration: 200ms;
 }
