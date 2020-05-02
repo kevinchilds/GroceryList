@@ -224,6 +224,7 @@ footer{
 }
 
 #listkeyIF{
+    -webkit-appearance: none;
     float: left;
     width: 85px;
     margin-left: 7px;
