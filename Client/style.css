@@ -74,6 +74,7 @@ nav{
 }
 
 .itemData{
+    -webkit-appearance: none;
     width: 60%;
     margin: auto;
     padding: 12px 0px;
