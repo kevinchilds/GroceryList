@@ -37,11 +37,6 @@ async function clearItems(){
     //remove item from button event
     async function removeItem(event, element) {
         event.preventDefault();
-        console.log(`removeItem: event = ${event}, element = ${element}`);
-        /* if (event.target != element) {
-            event.stopPropagation();
-            return;
-        } */
 
         const vdate = confirm(`Are sure you want to delete \"${event.target.value}\"?`);
         if(vdate){
