@@ -25,7 +25,7 @@ async function validateItemsInCart(){
     let checkVisiblity = 0;
     const response = await fetch(`/validate-cart/${keyID}`);
     const data = await response.json();
-    clearItemBtn.style.visibility = data.length === 0 ? 'hidden' : 'visible'; 
+    clearItemBtn.style.visibility = await data.length === 0 ? 'hidden' : 'visible'; 
 }
 
 //return specific item from DB
@@ -49,11 +49,10 @@ function inCartDecoration(item){
 async function toggleCart(event){
     event.preventDefault();
     let data = await checkInCart(event.target.value);
-    console.log(data);
     data.inCart = data.inCart ? false : true; 
     inCartDecoration(data);
-   
-    fetch(`/toggle-cart/${keyID}`, {
+
+    await fetch(`/toggle-cart/${keyID}`, {
     method: 'POST', // or 'PUT'
     headers: {
         'Content-Type': 'application/json',
@@ -63,6 +62,7 @@ async function toggleCart(event){
     .catch((error) => {
     console.error('Error:', error);
     });
-    
+
     validateItemsInCart();
+    
 }
