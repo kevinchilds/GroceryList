@@ -272,3 +272,20 @@ footer{
     width: 100%;
     max-width: 700px;
 }
+
+
+@media (max-width: 1000px) {
+
+    .itemStyle {
+        height: 50px;
+        font-size: larger;     
+    }
+    .itemData{
+
+        font-size: medium;
+    }
+    .itemButton{
+        font-size: medium;
+    }
+
+}
