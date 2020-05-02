@@ -35,8 +35,13 @@ async function clearItems(){
     
     
     //remove item from button event
-    async function removeItem(event) {
+    async function removeItem(event, element) {
         event.preventDefault();
+        console.log(`removeItem: event = ${event}, element = ${element}`);
+        /* if (event.target != element) {
+            event.stopPropagation();
+            return;
+        } */
 
         const vdate = confirm(`Are sure you want to delete \"${event.target.value}\"?`);
         if(vdate){
@@ -58,6 +63,15 @@ async function clearItems(){
         
             event.target.parentElement.remove();
             validateItemsInCart();
-
+        }
+        else{
+            //cancel toggle event
+            if (!e) {
+                var e = window.event;
+            }
+                e.cancelBubble = true;
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
         }
     }
