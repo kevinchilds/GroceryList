@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 var bodyParser = require('body-parser');
 var cors = require('cors')
+const mongoose =require('mongoose');
 
 
 
@@ -15,6 +16,10 @@ app.use(cors())
 /* app.use(express.static(path.join(__dirname,'../Client'))); */
 /* app.use(express.static(path.join(__dirname,'../react-client/public'))); */
 
+mongoose.connect('mongodb+srv://GroceryList:DbwflWOmW9Qagh4f@redesignforme-9mmku.azure.mongodb.net/Portfolio', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
 //location of APIs
 app.use('/', require('./apis/groceryList'));

@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 
 const Item = ({element, groceries, setGroceries, itemPos}) => {
+
+    const [toggle,setToggle] = useState(element.inCart)
+    const [isLoading, setLoading] = useState(false)
 
     const deleteItem = async (e) => {
         e.preventDefault()
@@ -19,17 +22,28 @@ const Item = ({element, groceries, setGroceries, itemPos}) => {
         }
     }
 
+    const toggleItem = async () => {
+        try {
+            setLoading(true)
+            const response = await axios.post(`/toggle-cart`, {id: element._id})
+            setLoading(false)
+            console.log(response)
+            setToggle(!toggle)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <>
-            <ItemContainer>
-            <FDRow>
-                <User>{element.name ? element.name : '?'}</User>
-                {!element.inCart ? <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>}
-            </FDRow>
-            <div>
-                <Button variant='danger' onClick={deleteItem}>Delete</Button>
-            </div>
-            
+            <ItemContainer onClick={isLoading ? null : toggleItem}>
+                <FDRow>
+                    <User>{element.name ? element.name : '?'}</User>
+                    {!toggle ? <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>}
+                </FDRow>
+                <div>
+                    <Button variant='danger' onClick={deleteItem}>Delete</Button>
+                </div>
             </ItemContainer>
         </>
     )
@@ -46,6 +60,7 @@ export const ItemContainer = styled.div`
     padding: 10px;
     border-radius: 4px;
     margin: 5px auto;
+    cursor: pointer;
 `;
 
 export const InCartText = styled.div`
