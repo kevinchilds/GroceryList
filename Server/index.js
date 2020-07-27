@@ -3,13 +3,17 @@ const express = require('express');
 const path = require('path');
 const app = express();
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 
 
 app.use(bodyParser.json());
-//location of frontend
-app.use(express.static(path.join(__dirname,'../Client')));
 
+app.use(cors())
+
+//location of frontend
+/* app.use(express.static(path.join(__dirname,'../Client'))); */
+/* app.use(express.static(path.join(__dirname,'../react-client/public'))); */
 
 
 //location of APIs

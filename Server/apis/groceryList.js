@@ -5,7 +5,7 @@ var MongoClient = require('mongodb').MongoClient;
 const dbName = "Portfolio";
 var assert = require('assert');
 
-MongoClient.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true, useUnifiedTopology: true } ,function(err, client) {
+MongoClient.connect('mongodb+srv://GroceryList:DbwflWOmW9Qagh4f@redesignforme-9mmku.azure.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true } ,function(err, client) {
     if(err) { 
         return console.log('Unable to connect to mongo server: ', err);
     }

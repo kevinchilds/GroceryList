@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId;
 
 const dbName = "Portfolio";
 var assert = require('assert');
 
 
-MongoClient.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true, useUnifiedTopology: true } ,function(err, client) {
+MongoClient.connect('mongodb+srv://GroceryList:DbwflWOmW9Qagh4f@redesignforme-9mmku.azure.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true } ,function(err, client) {
     if(err) { 
         return console.log('Failed connecting to server: ', err);
     }else{
@@ -14,6 +15,7 @@ MongoClient.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true, useUnifie
 
         //return all items in a grocery list
         router.get('/all-items/:id', (req, res) => {
+            console.log(`${req.params.id}`)
             let data = db.collection('item').find({listkey: req.params.id}).toArray()
             .then(results => {
                 console.log(results)
@@ -85,6 +87,18 @@ MongoClient.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true, useUnifie
         })
         .catch(error => console.error(error))
         })
+
+        router.post('/remove-grocery-item', (req, res) => {
+            console.log('REQ.BODY', req.body)
+
+            let itemID = new ObjectId(req.body.id);
+            let data = db.collection('item').remove({ _id: itemID})
+            .then(results => {
+                console.log(results);
+                res.json(results);
+            })
+            .catch(error => console.error(error))
+            })
 
         //remove all items with inCart = true from specific grocery list
         router.post('/remove-incart-items/:id', (req, res) => {
