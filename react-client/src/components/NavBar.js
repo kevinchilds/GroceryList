@@ -5,22 +5,23 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 
-const NavBar = ({listkey}) => {
+const NavBar = ({listkey, nickname, setNickname}) => {
+
+    const addName = (e) => {
+        e.preventDefault()
+
+        localStorage.setItem('nickname', nickname);
+
+    }
+
     return (
         <Navbar collapseOnSelect bg="dark" variant="dark" expand="xl">
-            <Form inline>
-                <InputGroup>
-                <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">Key</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                    placeholder={listkey}
-                    aria-label="Key"
-                    aria-describedby="basic-addon1"
-                />
-                </InputGroup>
-                <Button style={{marginLeft: '5px'}}>Create New Key</Button>
-            </Form>
+            <Button>Create New List</Button>
+
+            <div>
+                <input value = {nickname} onChange={(e) => setNickname(e.target.value)}/>
+                <Button onClick={addName}>Add Name</Button>
+            </div>
         </Navbar>
     )
 }

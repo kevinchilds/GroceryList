@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const Item = new mongoose.Schema({
     text: {type: String, trim: true, default: ''},
     inCart: {type: Boolean, default: false},
-    listkey: {type: String, trim: true, default: ''}
+    listkey: {type: String, trim: true, default: ''},
+    name: {type: String, trim: true, default: '?'}
 },
 {
     collection: 'item'

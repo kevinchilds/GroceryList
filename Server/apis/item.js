@@ -30,10 +30,11 @@ router.get('/validate-cart/:id', async (req, res) => {
 //add item to specific grocery list
 router.post('/add-item', async (req, res) => {
         try{
-            let response = await Item.insert({
+            let response = await Item.create({
                 text: req.body.text,
                 inCart: req.body.inCart,
-                listkey: req.body.listkey
+                listkey: req.body.listkey,
+                name: req.body.name
             })
             console.log(response)
             res.json(response)

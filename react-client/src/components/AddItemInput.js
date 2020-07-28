@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import styled from 'styled-components'
 import axios from 'axios'
 
-const AddItemInput = ({listkey, groceries, setGroceries}) => {
+const AddItemInput = ({listkey, groceries, setGroceries, nickname}) => {
 
     const [item, setItem] = useState('')
 
@@ -13,7 +13,8 @@ const AddItemInput = ({listkey, groceries, setGroceries}) => {
         const data={
             text: item,
             inCart: false,
-            listkey: listkey
+            listkey: listkey,
+            name: nickname
         };
 
         try{

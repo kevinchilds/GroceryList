@@ -38,11 +38,11 @@ const Item = ({element, groceries, setGroceries, itemPos}) => {
         <>
             <ItemContainer onClick={isLoading ? null : toggleItem}>
                 <FDRow>
-                    <User>{element.name ? element.name : '?'}</User>
+                    {element.name !== '?' ? <User>{element.name}</User>:<></>}
                     {!toggle ? <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>}
                 </FDRow>
                 <div>
-                    <Button variant='danger' onClick={deleteItem}>Delete</Button>
+                    <Button variant='danger' onClick={deleteItem}>X</Button>
                 </div>
             </ItemContainer>
         </>
@@ -53,10 +53,11 @@ export default Item
 
 export const ItemContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    box-shadow: 0px 0px 4px #333;
+    width: 95%;
+    border: #aaa 1px solid;
     padding: 10px;
     border-radius: 4px;
     margin: 5px auto;
@@ -66,11 +67,23 @@ export const ItemContainer = styled.div`
 export const InCartText = styled.div`
     font-size: 24px;
     text-decoration: line-through;
+    overflow: hidden;
+    padding: 5px;
+
+    @media only screen and (max-width: 600px) {
+        font-size: 16px;
+    }
 `;
 
 
 export const OutCartText = styled.div`
     font-size: 24px;
+    overflow: hidden;
+    padding: 5px;
+
+    @media only screen and (max-width: 600px) { 
+        font-size: 16px;
+    }
 `;
 
 export const User = styled.div`
@@ -79,7 +92,7 @@ export const User = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f4f4f4;
+    background-color: #c1d6ff;
     margin: 5px;
 `;
 
