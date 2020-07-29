@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
+import FormControl from 'react-bootstrap/FormControl'
 import axios from 'axios'
 
 const Item = ({element, groceries, setGroceries, itemPos}) => {
@@ -37,13 +38,12 @@ const Item = ({element, groceries, setGroceries, itemPos}) => {
     return (
         <>
             <ItemContainer onClick={isLoading ? null : toggleItem}>
+                <textarea aria-label="With textarea" value={element.text} style={{padding: '0px', border: 'none', width: '60%', resize: 'none'}} row='auto' col='auto' readonly/>{/* <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>} */}
+                
                 <FDRow>
                     {element.name !== '?' ? <User>{element.name}</User>:<></>}
-                    {!toggle ? <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>}
-                </FDRow>
-                <div>
                     <Button variant='danger' onClick={deleteItem}>X</Button>
-                </div>
+                </FDRow>
             </ItemContainer>
         </>
     )
