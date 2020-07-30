@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd react-client&&npm install&&npm run build&&cd ..&&node Server/index.js",
+    "start": "node Server/index.js",
     "dev": "concurrently \"cd Server&&nodemon index.js&&cd ..\" \"cd react-client&&npm start\""
   },
   "engines": {
