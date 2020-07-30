@@ -70,6 +70,16 @@ router.post('/toggle-cart', async (req, res) => {
     }catch(error){console.log(error)}
 })
 
+router.post('/remove-all-items', async (req, res) => {
+    try{
+        console.log(req.body.id)
+        let item = await Item.deleteMany({listkey: req.body.listkey})
+        console.log(item)
+        res.json(item)
+        
+    }catch(error){console.log(error)}
+})
+
 
 
 MongoClient.connect('mongodb+srv://GroceryList:DbwflWOmW9Qagh4f@redesignforme-9mmku.azure.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true } ,function(err, client) {

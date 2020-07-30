@@ -38,9 +38,9 @@ const Item = ({element, groceries, setGroceries, itemPos}) => {
     return (
         <>
             <ItemContainer onClick={isLoading ? null : toggleItem}>
-                <textarea aria-label="With textarea" value={element.text} style={{padding: '0px', border: 'none', width: '60%', resize: 'none'}} row='auto' col='auto' readonly/>{/* <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>} */}
-                
-                <FDRow>
+                {/* <textarea aria-label="With textarea" value={element.text} style={{padding: '0px', border: 'none', width: '60%', resize: 'none'}} row='auto' col='auto' readonly/>{/* <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>} */}
+                <div style={{wordWrap: 'break-word', width: 'auto', textAlign: 'left'}}>{element.text}</div>
+                <FDRow >
                     {element.name !== '?' ? <User>{element.name}</User>:<></>}
                     <Button variant='danger' onClick={deleteItem}>X</Button>
                 </FDRow>
@@ -53,7 +53,6 @@ export default Item
 
 export const ItemContainer = styled.div`
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     width: 95%;
@@ -62,6 +61,7 @@ export const ItemContainer = styled.div`
     border-radius: 4px;
     margin: 5px auto;
     cursor: pointer;
+    background-color: white;
 `;
 
 export const InCartText = styled.div`

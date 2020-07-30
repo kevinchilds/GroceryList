@@ -23,14 +23,15 @@ const AddItemInput = ({listkey, groceries, setGroceries, nickname}) => {
             let temp = [...groceries]
             temp.push(data)
             setGroceries(temp)
+            setItem('')
         }catch(error){console.log(error)}
         
     }
 
     return (
-        <AIContainer>
+        <AIContainer onSubmit={addItem}>
             <AIInput value={item} onChange={(e) => setItem(e.target.value)} placeholder='Add Item'/>
-            <Button onClick = {addItem}>Add</Button>
+            <Button type='submit' style={{width: '15%', padding: '10px'}}>Add</Button>
         </AIContainer>
     )
 }
@@ -38,20 +39,21 @@ const AddItemInput = ({listkey, groceries, setGroceries, nickname}) => {
 export default AddItemInput
 
 
-export const AIContainer = styled.div`
+export const AIContainer = styled.form`
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin: 10px;
+    justify-content: space-between;
+    margin: 10px auto;
+    width: 95%;
 
     
 `;
 
 export const AIInput = styled.input`
     font-size: 18px;
-    margin: 0px 5px;
     border-radius: 4px;
     border: none;
-    padding: 5px;
     border: #ddd 1px solid;
+    width: 80%;
+    padding: 10px;
 `;
