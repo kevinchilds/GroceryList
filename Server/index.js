@@ -14,7 +14,7 @@ app.use(cors())
 
 //location of frontend
 /* app.use(express.static(path.join(__dirname,'../Client'))); */
-/* app.use(express.static(path.join(__dirname,'../react-client/public'))); */
+app.use(express.static(path.join(__dirname,'../react-client/build')));
 
 mongoose.connect('mongodb+srv://GroceryList:DbwflWOmW9Qagh4f@redesignforme-9mmku.azure.mongodb.net/Portfolio', {
     useNewUrlParser: true,
