@@ -16,13 +16,13 @@ app.use(cors())
 /* app.use(express.static(path.join(__dirname,'../Client'))); */
 app.use(express.static(path.join(__dirname,'../react-client/build')));
 
-mongoose.connect('mongodb+srv://GroceryList:DbwflWOmW9Qagh4f@redesignforme-9mmku.azure.mongodb.net/Portfolio', {
+mongoose.connect(process.env.MONGO_DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
 
 //location of APIs
-app.use('/', require('./apis/groceryList'));
+/* app.use('/', require('./apis/groceryList')); */
 app.use('/', require('./apis/item'));
 
 const PORT = process.env.PORT || 5000;
