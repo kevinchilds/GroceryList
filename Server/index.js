@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_DB_URI, {
   });
 
 //location of APIs
-/* app.use('/', require('./apis/groceryList')); */
+app.use('/', require('./apis/groceryList'));
 app.use('/', require('./apis/item'));
 
 const PORT = process.env.PORT || 5000;

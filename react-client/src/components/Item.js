@@ -39,7 +39,7 @@ const Item = ({element, groceries, setGroceries, itemPos}) => {
         <>
             <ItemContainer onClick={isLoading ? null : toggleItem}>
                 {/* <textarea aria-label="With textarea" value={element.text} style={{padding: '0px', border: 'none', width: '60%', resize: 'none'}} row='auto' col='auto' readonly/>{/* <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>} */}
-                <div style={{wordWrap: 'break-word', width: 'auto', textAlign: 'left'}}>{element.text}</div>
+                {toggle ? <InCartText>{element.text}</InCartText> : <OutCartText style={{wordWrap: 'break-word', width: 'auto', textAlign: 'left'}}>{element.text}</OutCartText> }
                 <FDRow >
                     {element.name !== '?' ? <User>{element.name}</User>:<></>}
                     <Button variant='danger' onClick={deleteItem}>X</Button>
@@ -69,6 +69,9 @@ export const InCartText = styled.div`
     text-decoration: line-through;
     overflow: hidden;
     padding: 5px;
+    word-wrap: break-word;
+    text-align: left;
+    width: auto;
 
     @media only screen and (max-width: 600px) {
         font-size: 16px;
@@ -80,6 +83,9 @@ export const OutCartText = styled.div`
     font-size: 24px;
     overflow: hidden;
     padding: 5px;
+    word-wrap: break-word;
+    text-align: left;
+    width: auto;
 
     @media only screen and (max-width: 600px) { 
         font-size: 16px;

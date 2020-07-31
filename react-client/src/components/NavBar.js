@@ -6,6 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import NavDropdown from 'react-bootstrap/NavDropdown'
+import axios from 'axios'
 
 const NavBar = ({listkey, nickname, setNickname}) => {
 
@@ -18,6 +19,18 @@ const NavBar = ({listkey, nickname, setNickname}) => {
 
     }
 
+    const createList = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await axios.post(`/add-list`, {listkey: `${Math.random().toString(36).substr(2, 9)}`})
+            console.log(response)
+            window.location.href= `/?listkey=${response.data.listkey}`
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
 
         <Navbar collapseOnSelect bg="dark" variant="dark" expand="xl" style={{boxShadow: '2px 0px 4px #333'}}>
@@ -27,7 +40,7 @@ const NavBar = ({listkey, nickname, setNickname}) => {
                 <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
                     <Nav className="justify-content-start" style={{margin: '0px 10px'}}>
                     <NavDropdown.Divider />
-                    <Button variant='outline-primary'>Create New List</Button>
+                    <Button variant='outline-primary' onClick={createList}>Create New List</Button>
                     <NavDropdown.Divider />
                     </Nav>
                    

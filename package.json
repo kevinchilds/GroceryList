@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd react-client&&npm install&&npm run build&&cd ..&&npm install&&node Server/index",
-    "dev": "concurrently \"cd Server&&nodemon index.js&&cd ..\" \"cd react-client&&npm start\""
+    "dev": "concurrently \"nodemon Server/index.js\" \"cd react-client&&npm start\""
   },
   "repository": {
     "type": "git",
