@@ -39,7 +39,7 @@ const Groceries = ({listkey, groceries, setGroceries}) => {
     return (
         <>
             {groceries.length > 0 ? (groceries.map((element, index) => <Item key={index} element = {element} itemPos={index} groceries={groceries} setGroceries={setGroceries}/>)) : <></>}
-            {groceries.length > 0 ? <Button variant= 'outline-danger' style={{width: '95%', margin: 'auto'}} onClick = {removeItems} block> Clear Items In Cart</Button> : <></>}
+            {groceries.length > 0 ? <Button variant= 'outline-danger' style={{width: '95%', margin: 'auto'}} onClick = {removeItems} block> Clear Items</Button> : <></>}
         </>
     )
 }
