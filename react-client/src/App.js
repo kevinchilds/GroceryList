@@ -9,13 +9,14 @@ function App() {
 
   const [listkey, setListKey] = useState('')
   const [groceries, setGroceries] = useState('')
-  const [nickname, setNickname] = useState('?')
+  const [nickname, setNickname] = useState('Anonymous')
 
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const key = urlParams.get('listkey');
     const name = localStorage.getItem('nickname');
+    console.log(`NAME: ${name}`);
     setListKey(key)
     setNickname(name)
 

@@ -46,7 +46,7 @@ const NavBar = ({listkey, nickname, setNickname}) => {
                    
                     <Nav className="justify-content-end">  
                     <div style={{display: 'flex'}}>
-                        <FormControl placeholder={nickname} aria-label='nickname' aria-describedby="basic-addon1" value = {nickname} onChange={(e) => setNickname(e.target.value)}/>
+                        <FormControl placeholder={nickname} aria-label='nickname' aria-describedby="basic-addon1" value = {nickname ? nickname : "Anonymous"} onChange={(e) => setNickname(e.target.value)}/>
                         {/* <input value = {nickname} onChange={(e) => setNickname(e.target.value)}/> */}
                         <Button onClick={addName} style={{marginLeft: '5px', width: '150px'}}>Add Name</Button>
                     </div>

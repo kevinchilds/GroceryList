@@ -41,7 +41,7 @@ const Item = ({element, groceries, setGroceries, itemPos}) => {
                 {/* <textarea aria-label="With textarea" value={element.text} style={{padding: '0px', border: 'none', width: '60%', resize: 'none'}} row='auto' col='auto' readonly/>{/* <OutCartText>{element.text}</OutCartText> : <InCartText>{element.text}</InCartText>} */}
                 {toggle ? <InCartText>{element.text}</InCartText> : <OutCartText style={{wordWrap: 'break-word', width: 'auto', textAlign: 'left'}}>{element.text}</OutCartText> }
                 <FDRow >
-                    {element.name !== '?' ? <User>{element.name}</User>:<></>}
+                    <User>{element.name ? element.name : "Anonymous"}</User>
                     <Button variant='danger' onClick={deleteItem}>X</Button>
                 </FDRow>
             </ItemContainer>

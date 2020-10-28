@@ -9,22 +9,25 @@ const AddItemInput = ({listkey, groceries, setGroceries, nickname}) => {
 
     const addItem = async (e) => {
         e.preventDefault()
+        if(item){
+            const data={
+                text: item,
+                inCart: false,
+                listkey: listkey,
+                name: nickname
+            };
 
-        const data={
-            text: item,
-            inCart: false,
-            listkey: listkey,
-            name: nickname
-        };
-
-        try{
-            const response = await axios.post('/add-item', data)
-            console.log(response)
-            let temp = [...groceries]
-            temp.push(data)
-            setGroceries(temp)
-            setItem('')
-        }catch(error){console.log(error)}
+            try{
+                const response = await axios.post('/add-item', data)
+                console.log(response)
+                let temp = [...groceries]
+                temp.push(data)
+                setGroceries(temp)
+                setItem('')
+            }catch(error){console.log(error)}
+        }else{
+            alert("\"Add Item\" field cannot be blank");
+        }
         
     }
 
