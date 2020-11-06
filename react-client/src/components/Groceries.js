@@ -6,9 +6,7 @@ import Button from 'react-bootstrap/Button'
 
 
 const Groceries = ({listkey, groceries, setGroceries}) => {
-
-    useEffect(() => {
-        const getGroceries = async () => {
+    const getGroceries = async () => {
             try {
                 if(listkey !== ''){
                     console.log(listkey)
@@ -21,7 +19,9 @@ const Groceries = ({listkey, groceries, setGroceries}) => {
             }
         }
 
-        getGroceries()
+    useEffect(() => {
+       getGroceries();
+       setInterval(getGroceries, 10000);
     }, [listkey, setGroceries])
 
     const removeItems = async (e) => {

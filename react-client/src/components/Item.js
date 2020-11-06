@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
-import FormControl from 'react-bootstrap/FormControl'
 import axios from 'axios'
 
 const Item = ({element, groceries, setGroceries, itemPos}) => {
